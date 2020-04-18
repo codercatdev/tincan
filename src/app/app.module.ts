@@ -8,6 +8,8 @@ import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { LayoutModule } from './modules/layout/layout.module';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    LayoutModule
+    // NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ],
   providers: [
     ScreenTrackingService,
