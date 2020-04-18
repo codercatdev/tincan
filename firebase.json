@@ -14,7 +14,7 @@
   },
   "hosting": [
     {
-      "target": "tincan",
+      "target": "ajonp-tincan-beta",
       "public": "dist/tincan",
       "ignore": [
         "firebase.json",

@@ -2,7 +2,7 @@
   "targets": {
     "ajonp-tincan-beta": {
       "hosting": {
-        "tincan": [
+        "ajonp-tincan-beta": [
           "ajonp-tincan-beta"
         ]
       }
