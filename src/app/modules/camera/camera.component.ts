@@ -5,6 +5,7 @@ import { finalize, first } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as uuid from 'uuid';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class CameraComponent implements OnInit {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
-  constructor(private afStorage: AngularFireStorage, private afAuth: AngularFireAuth){
+  constructor(private afStorage: AngularFireStorage, private afAuth: AngularFireAuth, private afFirestore: AngularFirestore){
   }
 
   uploadPercent: Observable<number>;
@@ -65,12 +66,10 @@ export class CameraComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
   }
 
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
 
@@ -85,13 +84,19 @@ export class CameraComponent implements OnInit {
   async upload(){
     const user = await this.afAuth.currentUser;
     const picId = uuid.v4();
-    const ref = this.afStorage.ref(`imageUploads/${user.uid}/${picId}`);
+    const path = `users/${user.uid}/imageUploads/${picId}`;
+    const ref = this.afStorage.ref(path);
     const task = ref.putString(this.webcamImage.imageAsDataUrl, 'data_url', {contentType: 'image/jpeg'});
     // observe percentage changes
     this.uploadPercent = task.percentageChanges();
     // get notified when the download URL is available
     task.snapshotChanges().pipe(
-        finalize(() => ref.getDownloadURL().pipe(first()).subscribe(f => console.log(f)))
+        finalize(() => ref.getDownloadURL().pipe(first()).subscribe(url => {
+          this.afFirestore.doc(path).set({
+            url
+          });
+          this.retake();
+        }))
      )
     .subscribe();
   }
