@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ajonp-tincan-beta": {
+      "hosting": {
+        "tincan": [
+          "ajonp-tincan-beta"
+        ]
+      }
+    }
+  }
+}

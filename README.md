@@ -1,1 +1,1 @@
-# Fun Chat App using Firebase
+# Tincan is the code name for recipe app
