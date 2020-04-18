@@ -1,5 +1,11 @@
 {
-  "projects": {
-    "default": "ajonp-tincan-beta"
+  "targets": {
+    "ajonp-tincan-beta": {
+      "hosting": {
+        "tincan": [
+          "ajonp-tincan-beta"
+        ]
+      }
+    }
   }
 }
