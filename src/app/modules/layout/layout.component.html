@@ -2,8 +2,9 @@
   <mat-drawer #drawer class="example-sidenav" mode="side">
   </mat-drawer>
   <mat-toolbar color="primary">
-    <span>My Application</span>
   </mat-toolbar>
-  <router-outlet></router-outlet>
-
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <app-authenticate fxFill></app-authenticate>
+    <router-outlet *ngIf="afAuth.user | async as user"></router-outlet>
+  </div>
 </mat-drawer-container>

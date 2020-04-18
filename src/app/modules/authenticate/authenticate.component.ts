@@ -12,7 +12,6 @@ import { auth } from 'firebase/app';
 export class AuthenticateComponent  {
 
   constructor(public afAuth: AngularFireAuth) {
-    afAuth.user.subscribe(u => console.log(u));
   }
   login() {
     this.afAuth.signInWithPopup(new auth.GoogleAuthProvider());

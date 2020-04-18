@@ -4,6 +4,9 @@ import { LayoutComponent } from './layout.component';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthenticateModule } from '../authenticate/authenticate.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AngularFireAuthModule } from '@angular/fire/auth/';
 
 
 
@@ -12,8 +15,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   imports: [
     CommonModule,
     RouterModule,
+    AuthenticateModule,
     MatSidenavModule,
     MatToolbarModule,
+    FlexLayoutModule,
+    AngularFireAuthModule
   ],
   exports: [
     LayoutComponent
