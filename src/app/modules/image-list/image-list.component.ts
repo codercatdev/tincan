@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Pic } from 'src/app/models/pic';
 
 @Component({
   selector: 'app-image-list',
@@ -10,8 +11,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
   ]
 })
 export class ImageListComponent {
-  private picsCollection: AngularFirestoreCollection<Photo>;
-  pics: Observable<Photo[]>;
+  private picsCollection: AngularFirestoreCollection<Pic>;
+  pics: Observable<Pic[]>;
 
   constructor(private afFirestore: AngularFirestore, private afAuth: AngularFireAuth) {
     this.setCollection();
@@ -19,13 +20,9 @@ export class ImageListComponent {
   async setCollection() {
     this.afAuth.user.subscribe(user => {
       if (user) {
-        this.picsCollection = this.afFirestore.collection<Photo>(`users/${user.uid}/imageUploads/`, ref => ref.orderBy('created'));
+        this.picsCollection = this.afFirestore.collection<Pic>(`users/${user.uid}/imageUploads/`, ref => ref.orderBy('created', 'desc'));
         this.pics = this.picsCollection.valueChanges();
       }
     });
   }
-}
-
-interface Photo {
-  url: string;
 }

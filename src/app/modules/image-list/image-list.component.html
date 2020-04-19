@@ -1,10 +1,21 @@
-<div *ngFor="let pic of pics | async" fxLayout="row" fxLayoutAlign="start start">
-  <mat-card fxFlex fxLayout="row wrap" fxLayoutAlign="center start" style="margin: 5px 0 5px 0;">
-    <div fxFlex="40">
-      <img [src]="pic?.url" style="width: 100%; height: 100%;" />
-    </div>
-    <div fxFlex style="margin: 5px 0 5px 0;">
-      <h2>Recipe</h2>
-    </div>
-  </mat-card>
+<div *ngIf='pics | async; let pics'>
+  <div *ngIf="pics.length === 0">
+    <h3>No Recipes Loaded Yet</h3>
+    <button mat-raised-button color='accent' [routerLink]="'/add'">Add Recipe</button>
+  </div>
+  <div *ngFor="let pic of pics" fxLayout="row" fxLayoutAlign="start start">
+    <mat-card fxFlex fxLayout="row wrap" fxLayoutAlign="center start" style="margin: 5px 0 5px 0;">
+      <div fxFlex="100" [fxFlex.gt-sm]="40">
+        <img [src]="pic?.url" style="width: 100%; height: 100%;" />
+      </div>
+      <div fxFlex style="margin: 5px 0 5px 0;">
+        <h2>Recipe</h2>
+        <div *ngIf="pic?.processing; else detected">Processing...</div>
+        <ng-template #detected>
+          {{pic?.detectedText}}
+        </ng-template>
+      </div>
+      <button mat-button [routerLink]="pic.id">Update</button>
+    </mat-card>
+  </div>
 </div>

@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as uuid from 'uuid';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -95,6 +96,8 @@ export class CameraComponent implements OnInit {
         finalize(() => ref.getDownloadURL().pipe(first()).subscribe(url => {
           this.afFirestore.doc(path).set({
             url,
+            storageLocation: `gs://${environment.firebase.storageBucket}/${path}`,
+            processing: true,
             created: firebase.firestore.FieldValue.serverTimestamp()
           });
           this.retake();

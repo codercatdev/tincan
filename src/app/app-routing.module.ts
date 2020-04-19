@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'add',
     loadChildren: () => import('./modules/camera/camera.module').then(m => m.CameraModule),
   },
+  {
+    path: ':id',
+    loadChildren: () => import('./modules/image/image.module').then(m => m.ImageModule),
+  },
 ];
 
 @NgModule({

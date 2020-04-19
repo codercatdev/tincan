@@ -18,7 +18,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <router-outlet *ngIf="afAuth.user | async as user; else welcome"></router-outlet>
       <ng-template #welcome>
-        Welcome
+        Welcome to the recipe loader for Google Actions.
       </ng-template>
     </div>
   </mat-sidenav-content>
