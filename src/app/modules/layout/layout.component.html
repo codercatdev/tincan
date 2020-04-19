@@ -1,10 +1,25 @@
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-  </mat-drawer>
-  <mat-toolbar color="primary">
-  </mat-toolbar>
-  <div fxLayout="row wrap" fxLayoutAlign="center center">
-    <app-authenticate fxFill></app-authenticate>
-    <router-outlet *ngIf="afAuth.user | async as user"></router-outlet>
+<mat-toolbar color="primary" fxLayout="row wrap" style="position: fixed;top: 0;left: 0;right: 0;">
+  <div fxFlex="initial">
+    <button mat-button routerLink="/">
+      <h2>Recipes</h2>
+    </button>
   </div>
-</mat-drawer-container>
+  <div fxFlex="auto">
+    <button mat-raised-button color='accent' routerLink="/add"  *ngIf="afAuth.user | async as user">Add Recipe</button>
+  </div>
+  <div fxFlex="nogrow">
+    <app-authenticate></app-authenticate>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container style="position: absolute; top: 60px; bottom: 0;left: 0;right: 0;">
+  <mat-sidenav #drawer class="example-sidenav" mode="side">
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <router-outlet *ngIf="afAuth.user | async as user; else welcome"></router-outlet>
+      <ng-template #welcome>
+        Welcome
+      </ng-template>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthenticateModule } from '../authenticate/authenticate.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireAuthModule } from '@angular/fire/auth/';
-
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -15,11 +15,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth/';
   imports: [
     CommonModule,
     RouterModule,
-    AuthenticateModule,
     MatSidenavModule,
     MatToolbarModule,
     FlexLayoutModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AuthenticateModule,
+    MatButtonModule
   ],
   exports: [
     LayoutComponent

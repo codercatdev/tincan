@@ -6,6 +6,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as uuid from 'uuid';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase/app';
 
 
 @Component({
@@ -93,7 +94,8 @@ export class CameraComponent implements OnInit {
     task.snapshotChanges().pipe(
         finalize(() => ref.getDownloadURL().pipe(first()).subscribe(url => {
           this.afFirestore.doc(path).set({
-            url
+            url,
+            created: firebase.firestore.FieldValue.serverTimestamp()
           });
           this.retake();
         }))
