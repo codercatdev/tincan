@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ImageListComponent } from './image-list.component';
+import { RecipesComponent } from './recipes.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,12 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 const routes: Routes = [
   {
     path: '',
-    component: ImageListComponent,
+    component: RecipesComponent,
   },
 ];
 
 @NgModule({
-  declarations: [ImageListComponent],
+  declarations: [RecipesComponent],
   imports: [
     CommonModule,
     AngularFirestoreModule,
@@ -27,6 +27,6 @@ const routes: Routes = [
     FlexLayoutModule,
     MatButtonModule,
   ],
-  exports: [ImageListComponent]
+  exports: [RecipesComponent]
 })
-export class ImageListModule { }
+export class RecipestModule { }

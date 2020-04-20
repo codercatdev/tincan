@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ImageComponent } from './image.component';
+import { RecipeComponent } from './recipe.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { ImageDeleteDialogComponent } from './image-delete.component';
+import { RecipeDeleteDialogComponent } from './recipe-delete.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ImageComponent,
+    component: RecipeComponent,
   },
 ];
 
 @NgModule({
-  declarations: [ImageComponent, ImageDeleteDialogComponent],
+  declarations: [RecipeComponent, RecipeDeleteDialogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -26,4 +26,4 @@ const routes: Routes = [
     MatButtonModule
   ]
 })
-export class ImageModule { }
+export class RecipeModule { }

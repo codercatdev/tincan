@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./modules/image-list/image-list.module').then(m => m.ImageListModule),
+    loadChildren: () => import('./modules/recipes/recipes.module').then(m => m.RecipestModule),
   },
   {
     path: 'add',
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    loadChildren: () => import('./modules/image/image.module').then(m => m.ImageModule),
+    loadChildren: () => import('./modules/recipe/recipe.module').then(m => m.RecipeModule),
   },
 ];
 

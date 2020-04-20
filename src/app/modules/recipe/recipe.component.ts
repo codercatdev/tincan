@@ -4,19 +4,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap, map, first } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Pic } from './node_modules/src/app/models/Recipe';
+import { Recipe } from 'src/app/models/Recipe';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ImageDeleteDialogComponent, ImageDeleteDialogData } from './image-delete.component';
+import { RecipeDeleteDialogData, RecipeDeleteDialogComponent } from './recipe-delete.component';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
-  selector: 'app-image',
-  templateUrl: './image.component.html',
+  selector: 'app-recipe',
+  templateUrl: './recipe.component.html',
   styles: [
   ]
 })
-export class ImageComponent implements OnInit {
-  pic: Observable<Pic>;
+export class RecipeComponent implements OnInit {
+  recipe: Observable<Recipe>;
   refString: string;
   constructor(
     private route: ActivatedRoute,
@@ -28,23 +28,23 @@ export class ImageComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.pic = this.route.params.pipe(switchMap((p, i) =>
+    this.recipe = this.route.params.pipe(switchMap((p, i) =>
       this.afAuth.user.pipe(switchMap(auth => {
         this.refString = `/users/${auth.uid}/imageUploads/${p.id}`;
-        return auth ? this.afFirestore.doc<Pic>(this.refString).valueChanges() : null;
+        return auth ? this.afFirestore.doc<Recipe>(this.refString).valueChanges() : null;
       }))));
   }
   delete() {
-    const dialogRef = this.dialog.open(ImageDeleteDialogComponent, {
+    const dialogRef = this.dialog.open(RecipeDeleteDialogComponent, {
       width: '80%',
       data: { delete: true }
     });
 
-    dialogRef.afterClosed().pipe(first(),map(async (result: ImageDeleteDialogData) => {
+    dialogRef.afterClosed().pipe(first(),map(async (result: RecipeDeleteDialogData) => {
       if (result) {
         try{
           await this.afStorage.ref(this.refString).delete();
-          await this.afFirestore.doc<Pic>(this.refString).delete();
+          await this.afFirestore.doc<Recipe>(this.refString).delete();
           this.router.navigate(['/']);
         }catch(err){
           console.log(err);
