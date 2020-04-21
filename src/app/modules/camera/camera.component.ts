@@ -93,9 +93,9 @@ export class CameraComponent implements OnInit {
     this.uploadPercent = task.percentageChanges();
     // get notified when the download URL is available
     task.snapshotChanges().pipe(
-        finalize(() => ref.getDownloadURL().pipe(first()).subscribe(url => {
+        finalize(() => ref.getDownloadURL().pipe(first()).subscribe(image => {
           this.afFirestore.doc(path).set({
-            url,
+            image,
             storageLocation: `gs://${environment.firebase.storageBucket}/${path}`,
             processing: true,
             created: firebase.firestore.FieldValue.serverTimestamp()

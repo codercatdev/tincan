@@ -4,17 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./modules/recipes/recipes.module').then(m => m.RecipestModule),
-  },
-  {
     path: 'add',
     loadChildren: () => import('./modules/camera/camera.module').then(m => m.CameraModule),
   },
   {
-    path: ':id',
-    loadChildren: () => import('./modules/recipe/recipe.module').then(m => m.RecipeModule),
-  },
+    path: '',
+    loadChildren: () => import('./modules/recipe/recipes.module').then(m => m.RecipeModule),
+  }
 ];
 
 @NgModule({

@@ -11,8 +11,8 @@ import { Recipe } from 'src/app/models/Recipe';
   ]
 })
 export class RecipesComponent {
-  private picsCollection: AngularFirestoreCollection<Recipe>;
-  pics: Observable<Recipe[]>;
+  private recipesCollection: AngularFirestoreCollection<Recipe>;
+  recipes: Observable<Recipe[]>;
 
   constructor(private afFirestore: AngularFirestore, private afAuth: AngularFireAuth) {
     this.setCollection();
@@ -20,8 +20,9 @@ export class RecipesComponent {
   async setCollection() {
     this.afAuth.user.subscribe(user => {
       if (user) {
-        this.picsCollection = this.afFirestore.collection<Recipe>(`users/${user.uid}/imageUploads/`, ref => ref.orderBy('created', 'desc'));
-        this.pics = this.picsCollection.valueChanges();
+        this.recipesCollection = this.afFirestore.collection<Recipe>(`users/${user.uid}/imageUploads/`, ref =>
+        ref.orderBy('created', 'desc'));
+        this.recipes = this.recipesCollection.valueChanges();
       }
     });
   }

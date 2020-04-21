@@ -1,0 +1,88 @@
+<div *ngIf="recipe | async; let recipe" fxLayout="row" fxLayoutAlign="start start">
+  <mat-card fxFlex fxLayout="row wrap" fxLayoutAlign="center start" style="margin: 5px 0 5px 0;">
+    <div fxFlex>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+        <img [src]="recipe?.image" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+    <div fxFlex="50" fxFlex.lt-md="100" style="margin: 5px 0 5px 0;" style="margin: 0 0 0 10px;">
+      <div *ngIf="recipe?.processing; else detected">Processing...</div>
+      <ng-template #detected>
+        {{recipe?.detectedText}}
+      </ng-template>
+      <div fxLayout="column" [formGroup]="recipeForm" *ngIf="recipeForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Cook Time</mat-label>
+          <input matInput type="number" formControlName="cookTime">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Keywords</mat-label>
+          <input matInput type="text" formControlName="keywords">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prep Time</mat-label>
+          <input matInput type="number" formControlName="prepTime">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Recipe Category</mat-label>
+          <input matInput type="text" formControlName="recipeCategory" placeholder="e.g. 'dinner', 'main course'...">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Recipe Cuisine</mat-label>
+          <input matInput type="text" formControlName="recipeCuisine"
+            placeholder="e.g. 'French', 'Mediterranean','American'...">
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlexFill fxLayout="row wrap" fxLayoutAlign="center">
+      <div fxFlex="45" fxFlex.lt-md="100" style="margin: 20px;">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+          <h2>Ingredients</h2>
+          <button mat-raised-button color="primary">Add Ingredient</button>
+        </div>
+        <table mat-table [dataSource]="recipeIngredientsDataSource" style="width: 100%;">
+          <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef> Qty </th>
+            <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="ingredient">
+            <th mat-header-cell *matHeaderCellDef> Ingredient </th>
+            <td mat-cell *matCellDef="let element"> {{element.ingredient}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="recipeIngredientsColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: recipeIngredientsColumns;"></tr>
+        </table>
+      </div>
+      <div fxFlex="45" fxFlex.lt-md="100" style="margin: 20px;">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+          <h2>Instructions</h2>
+          <button mat-raised-button color="accent">Add Instruction</button>
+        </div>
+        <table mat-table [dataSource]="recipeInstructionsDataSource" style="width: 100%;">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="text">
+            <th mat-header-cell *matHeaderCellDef> Text </th>
+            <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="recipeInstructionsColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: recipeInstructionsColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-card>
+</div>

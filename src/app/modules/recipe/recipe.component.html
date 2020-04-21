@@ -1,7 +1,7 @@
 <div *ngIf="recipe | async; let recipe" fxLayout="row" fxLayoutAlign="start start">
   <mat-card fxFlex fxLayout="row wrap" fxLayoutAlign="center start" style="margin: 5px 0 5px 0;">
     <div fxFlex="100" [fxFlex.gt-sm]="40">
-      <img [src]="recipe?.url" style="width: 100%; height: 100%;" />
+      <img [src]="recipe?.image" style="width: 100%; height: 100%;" />
     </div>
     <div fxFlex style="margin: 5px 0 5px 0;">
       <h2>Recipe</h2>
@@ -10,6 +10,9 @@
         {{recipe?.detectedText}}
       </ng-template>
     </div>
-    <button mat-button (click)="delete()">Delete</button>
+    <div fxFill fxLayout="row wrap" fxLayoutAlign="end center">
+      <button mat-button color="warn" (click)="delete()">Delete</button>
+      <button mat-button color="accent" routerLink="/{{recipe.id}}/edit">Edit</button>
+    </div>
   </mat-card>
 </div>
