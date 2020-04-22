@@ -9,11 +9,14 @@
         <img [src]="recipe?.image" style="width: 100%; height: 100%;" />
       </div>
       <div fxFlex style="margin: 5px 0 5px 0;">
-        <h2 [routerLink]="recipe.id" style="cursor: pointer;">Recipe</h2>
+        <h2 [routerLink]="recipe.id" style="cursor: pointer;">{{recipe.name}}</h2>
+        <p>{{recipe.description}}</p>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+          <p *ngIf="recipe.cookTime">Cook Time: {{recipe.cookTime}} minutes</p>
+          <p *ngIf="recipe.prepTime">Prep Time: {{recipe.prepTime}} minutes</p>
+        </div>
       </div>
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
-        <button color="primary" mat-button [routerLink]="recipe.id">Select</button>
-      </div>
+      <p fxFlexFill style="color:lightgray">Last Updated: {{recipe.updatedAt.toDate() | date:'medium'}}</p>
     </mat-card>
   </div>
 </div>

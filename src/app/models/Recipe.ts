@@ -1,7 +1,7 @@
 export class Recipe {
   public id?: string;
-  public createdAt?: string;
-  public updatedAt?: string;
+  public createdAt?: firebase.firestore.Timestamp;
+  public updatedAt?: firebase.firestore.Timestamp;
   public storageLocation?: string;
   public context?: string;
   public author?: string;
