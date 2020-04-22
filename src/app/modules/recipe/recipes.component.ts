@@ -20,8 +20,8 @@ export class RecipesComponent {
   async setCollection() {
     this.afAuth.user.subscribe(user => {
       if (user) {
-        this.recipesCollection = this.afFirestore.collection<Recipe>(`users/${user.uid}/imageUploads/`, ref =>
-        ref.orderBy('created', 'desc'));
+        this.recipesCollection = this.afFirestore.collection<Recipe>(`users/${user.uid}/recipes/`, ref =>
+        ref.orderBy('updatedAt', 'desc'));
         this.recipes = this.recipesCollection.valueChanges();
       }
     });

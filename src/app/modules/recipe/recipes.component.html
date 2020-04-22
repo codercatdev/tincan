@@ -10,10 +10,6 @@
       </div>
       <div fxFlex style="margin: 5px 0 5px 0;">
         <h2 [routerLink]="recipe.id" style="cursor: pointer;">Recipe</h2>
-        <div *ngIf="recipe?.processing; else detected">Processing...</div>
-        <ng-template #detected>
-          {{recipe?.detectedText}}
-        </ng-template>
       </div>
       <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
         <button color="primary" mat-button [routerLink]="recipe.id">Select</button>

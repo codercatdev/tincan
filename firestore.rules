@@ -4,8 +4,15 @@ service cloud.firestore {
     match /users/{userId} {
       allow create, read, update, delete: if request.auth.uid == userId;
 
-      match /imageUploads/{picId} {
+      match /recipes/{recipeId} {
         allow create, read, update, delete: if request.auth.uid == userId;
+
+        match /recipeIngredients/{recipeIngredientId} {
+          allow create, read, update, delete: if request.auth.uid == userId;
+        }
+        match /recipeInstructions/{recipeInstructionId} {
+          allow create, read, update, delete: if request.auth.uid == userId;
+        }
       }
     }
   }

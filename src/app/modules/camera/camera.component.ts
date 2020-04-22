@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Subject, Observable } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
@@ -8,7 +8,6 @@ import * as uuid from 'uuid';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { environment } from 'src/environments/environment';
-
 
 @Component({
   selector: 'app-camera',
@@ -36,7 +35,14 @@ export class CameraComponent implements OnInit {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
+  public innerWidth;
+
   constructor(private afStorage: AngularFireStorage, private afAuth: AngularFireAuth, private afFirestore: AngularFirestore){
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   uploadPercent: Observable<number>;
@@ -46,6 +52,7 @@ export class CameraComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
+    this.innerWidth = window.innerWidth;
   }
 
   public triggerSnapshot(): void {
@@ -86,7 +93,7 @@ export class CameraComponent implements OnInit {
   async upload(){
     const user = await this.afAuth.currentUser;
     const picId = uuid.v4();
-    const path = `users/${user.uid}/imageUploads/${picId}`;
+    const path = `users/${user.uid}/recipes/${picId}`;
     const ref = this.afStorage.ref(path);
     const task = ref.putString(this.webcamImage.imageAsDataUrl, 'data_url', {contentType: 'image/jpeg'});
     // observe percentage changes
@@ -97,8 +104,6 @@ export class CameraComponent implements OnInit {
           this.afFirestore.doc(path).set({
             image,
             storageLocation: `gs://${environment.firebase.storageBucket}/${path}`,
-            processing: true,
-            created: firebase.firestore.FieldValue.serverTimestamp()
           });
           this.retake();
         }))

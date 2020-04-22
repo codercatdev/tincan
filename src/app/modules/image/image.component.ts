@@ -30,7 +30,7 @@ export class ImageComponent implements OnInit {
   ngOnInit(): void {
     this.pic = this.route.params.pipe(switchMap((p, i) =>
       this.afAuth.user.pipe(switchMap(auth => {
-        this.refString = `/users/${auth.uid}/imageUploads/${p.id}`;
+        this.refString = `/users/${auth.uid}/recipes/${p.id}`;
         return auth ? this.afFirestore.doc<Pic>(this.refString).valueChanges() : null;
       }))));
   }

@@ -5,10 +5,6 @@
     </div>
     <div fxFlex style="margin: 5px 0 5px 0;">
       <h2>Recipe</h2>
-      <div *ngIf="recipe?.processing; else detected">Processing...</div>
-      <ng-template #detected>
-        {{recipe?.detectedText}}
-      </ng-template>
     </div>
     <div fxFill fxLayout="row wrap" fxLayoutAlign="end center">
       <button mat-button color="warn" (click)="delete()">Delete</button>

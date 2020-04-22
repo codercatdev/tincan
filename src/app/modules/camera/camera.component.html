@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div *ngIf="!webcamImage; else showCapture">
-    <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+  <div *ngIf="!webcamImage; else showCapture" fxLayout="row wrap" fxLayoutAlign="center center">
+    <webcam [width]="innerWidth" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
       *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
       [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
       (initError)="handleInitError($event)">
@@ -16,8 +16,8 @@
 </div>
 
 <ng-template #showCapture>
-  <div class="snapshot" *ngIf="webcamImage">
-    <img [src]="webcamImage.imageAsDataUrl" />
+  <div class="snapshot" *ngIf="webcamImage" fxLayout="row wrap" fxLayoutAlign="center center">
+    <img [src]="webcamImage.imageAsDataUrl" style="height: 100%; width: 100%;" />
   </div>
   <div fxFill fxLayout="row wrap" fxLayoutAlign="center center">
     <button mat-raised-button color='accent' (click)="upload();">Upload</button>

@@ -14,8 +14,8 @@
 <mat-sidenav-container style="position: absolute; top: 60px; bottom: 0;left: 0;right: 0;">
   <mat-sidenav #drawer class="example-sidenav" mode="side">
   </mat-sidenav>
-  <mat-sidenav-content>
-    <div fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-sidenav-content fxLayout="row wrap" fxLayoutAlign="center top" style="padding-top: 10px;">
+    <div>
       <router-outlet *ngIf="afAuth.user | async as user; else welcome"></router-outlet>
       <ng-template #welcome>
         Welcome to the recipe loader for Google Actions.

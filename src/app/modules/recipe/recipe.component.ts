@@ -30,7 +30,7 @@ export class RecipeComponent implements OnInit {
   ngOnInit(): void {
     this.recipe = this.route.params.pipe(switchMap((p, i) =>
       this.afAuth.user.pipe(switchMap(auth => {
-        this.refString = `/users/${auth.uid}/imageUploads/${p.id}`;
+        this.refString = `/users/${auth.uid}/recipes/${p.id}`;
         return auth ? this.afFirestore.doc<Recipe>(this.refString).valueChanges() : null;
       }))));
   }

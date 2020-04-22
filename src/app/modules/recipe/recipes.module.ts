@@ -13,7 +13,12 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { IngredientDialogComponent } from './ingredient-dialog/ingredient-dialog.component';
+import { InstructionDialogComponent } from './instruction-dialog/instruction-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 
 const routes: Routes = [
   {
@@ -31,7 +36,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RecipesComponent, RecipeComponent, RecipeDeleteDialogComponent, RecipeEditComponent],
+  declarations: [
+    RecipesComponent,
+    RecipeComponent,
+    RecipeDeleteDialogComponent,
+    RecipeEditComponent,
+    IngredientDialogComponent,
+    InstructionDialogComponent
+  ],
   imports: [
     CommonModule,
     AngularFirestoreModule,
@@ -45,6 +57,9 @@ const routes: Routes = [
     MatButtonModule,
     MatInputModule,
     MatTableModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatChipsModule
   ]
 })
 export class RecipeModule { }

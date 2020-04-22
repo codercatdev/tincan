@@ -1,67 +1,64 @@
-
-
-export interface Recipe {
-  id?: string;
-  created?: string;
-  detectedText?: string;
-  storageLocation?: string;
-  processing?: boolean;
-  context?: string;
-  author?: string;
-  cookTime?: number;
-  datePublished?: Date;
-  description?: string;
-  image?: string;
-  keywords?: string;
-  name?: string;
-  nutrition?: Nutrition;
-  prepTime?: number;
-  recipeCategory?: string;
-  recipeCuisine?: string;
-  recipeIngredients?: RecipeIngredient[];
-  recipeInstructions?: RecipeInstruction[];
-  recipeYield?: string;
-  totalTime?: number;
-  video?: Video;
+export class Recipe {
+  public id?: string;
+  public createdAt?: string;
+  public updatedAt?: string;
+  public storageLocation?: string;
+  public context?: string;
+  public author?: string;
+  public cookTime?: number;
+  public datePublished?: Date;
+  public description?: string;
+  public image?: string;
+  public keywords?: string;
+  public name?: string;
+  public nutrition?: Nutrition;
+  public prepTime?: number;
+  public recipeCategory?: string;
+  public recipeCuisine?: string;
+  public recipeYield?: string;
+  public totalTime?: number;
+  public video?: Video;
 }
 
-export interface Nutrition {
-  type?: string;
-  calories?: string;
-  fatContent?: string;
+export class Nutrition {
+  public type?: string;
+  public calories?: string;
+  public fatContent?: string;
 }
 
-export interface RecipeIngredient {
-  qty: number;
-  ingredient: string;
+export class RecipeIngredient {
+  public id?: string;
+  public qty?: number;
+  public ingredient?: string;
 }
 
-export interface RecipeInstruction {
-  name?: string;
-  text?: string;
-  url?: string;
-  image?: string;
+export class RecipeInstruction {
+  public id?: string;
+  public name?: string;
+  public text?: string;
+  public url?: string;
+  public image?: string;
 }
 
-export interface Video {
-  video?: VideoClass;
+export class Video {
+  public video?: VideoClass;
 }
 
-export interface VideoClass {
-  name?: string;
-  description?: string;
-  thumbnailURL?: string;
-  contentURL?: string;
-  embedURL?: string;
-  uploadDate?: Date;
-  duration?: string;
-  hasPart?: HasPart[];
+export class VideoClass {
+  public name?: string;
+  public description?: string;
+  public thumbnailURL?: string;
+  public contentURL?: string;
+  public embedURL?: string;
+  public uploadDate?: Date;
+  public duration?: string;
+  public hasPart?: HasPart[];
 }
 
-export interface HasPart {
-  id?: string;
-  name?: string;
-  startOffset?: number;
-  endOffset?: number;
-  url?: string;
+export class HasPart {
+  public id?: string;
+  public name?: string;
+  public startOffset?: number;
+  public endOffset?: number;
+  public url?: string;
 }
