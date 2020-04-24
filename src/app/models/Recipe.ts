@@ -3,6 +3,7 @@ export class Recipe {
   public createdAt?: firebase.firestore.Timestamp;
   public updatedAt?: firebase.firestore.Timestamp;
   public storageLocation?: string;
+  public cloudinary?: any;
   public context?: string;
   public author?: string;
   public cookTime?: number;

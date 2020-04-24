@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { LayoutModule } from './modules/layout/layout.module';
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { LayoutModule } from './modules/layout/layout.module';
     AngularFirestoreModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
-    LayoutModule
+    LayoutModule,
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'ajonp'}),
     // NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ],
   providers: [

@@ -24,6 +24,8 @@
     "@angular/platform-browser": "~9.1.0",
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
+    "@cloudinary/angular-5.x": "^1.2.2",
+    "cloudinary-core": "^2.8.2",
     "firebase": "^7.14.1",
     "ngx-auth-firebaseui": "^4.0.4",
     "ngx-webcam": "^0.3.0",

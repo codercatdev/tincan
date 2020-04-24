@@ -19,6 +19,7 @@ import { InstructionDialogComponent } from './instruction-dialog/instruction-dia
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
 
 const routes: Routes = [
   {
@@ -59,7 +60,8 @@ const routes: Routes = [
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    CloudinaryModule
   ]
 })
 export class RecipeModule { }
