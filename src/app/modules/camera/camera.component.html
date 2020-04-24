@@ -1,9 +1,8 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div *ngIf="!webcamImage; else showCapture" fxLayout="row wrap" fxLayoutAlign="center center">
-    <webcam [width]="innerWidth" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
-      *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-      [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
-      (initError)="handleInitError($event)">
+  <div *ngIf="!webcamImage" fxLayout="row wrap" fxLayoutAlign="center center">
+    <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
+      [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
     </webcam>
     <div fxFill fxLayout="row wrap" fxLayoutAlign="center center">
       <button mat-raised-button color='primary' (click)="triggerSnapshot();">Capture</button>
@@ -13,14 +12,12 @@
       <li>{{error | json}}</li>
     </ul>
   </div>
-</div>
-
-<ng-template #showCapture>
-  <div class="snapshot" *ngIf="webcamImage" fxLayout="row wrap" fxLayoutAlign="center center">
+  <div class="snapshot" *ngIf="webcamImage" fxLayout="row wrap" fxLayoutAlign="center center" fxFill>
     <img [src]="webcamImage.imageAsDataUrl" style="height: 100%; width: 100%;" />
+    <div fxFill fxLayout="row wrap" fxLayoutAlign="center center">
+      <div fxFill><mat-progress-bar [value]="uploadPercent | async"></mat-progress-bar></div>
+      <button mat-raised-button color='accent' (click)="upload();">Upload</button>
+      <button mat-raised-button color='warn' (click)="retake();">Retake</button>
+    </div>
   </div>
-  <div fxFill fxLayout="row wrap" fxLayoutAlign="center center">
-    <button mat-raised-button color='accent' (click)="upload();">Upload</button>
-    <button mat-raised-button color='warn' (click)="retake();">Retake</button>
-  </div>
-</ng-template>
+</div>

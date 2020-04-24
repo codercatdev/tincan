@@ -5,7 +5,7 @@
     </button>
   </div>
   <div fxFlex="auto">
-    <button mat-raised-button color='accent' routerLink="/add"  *ngIf="afAuth.user | async as user">Add Recipe</button>
+    <button mat-raised-button color='accent' routerLink="recipes/add"  *ngIf="afAuth.user | async as user">Add Recipe</button>
   </div>
   <div fxFlex="nogrow">
     <app-authenticate></app-authenticate>
@@ -14,12 +14,10 @@
 <mat-sidenav-container style="position: absolute; top: 60px; bottom: 0;left: 0;right: 0;">
   <mat-sidenav #drawer class="example-sidenav" mode="side">
   </mat-sidenav>
-  <mat-sidenav-content fxLayout="row wrap" fxLayoutAlign="center top" style="padding-top: 10px;">
-    <div>
+  <mat-sidenav-content fxLayout="row wrap" fxLayoutAlign="center start" style="padding-top: 10px;">
       <router-outlet *ngIf="afAuth.user | async as user; else welcome"></router-outlet>
       <ng-template #welcome>
         Welcome to the recipe loader for Google Actions.
       </ng-template>
-    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,9 +1,8 @@
 <div *ngIf="recipe | async; let recipe" fxLayout="row" fxLayoutAlign="start start">
   <mat-card fxFlex fxLayout="row wrap" fxLayoutAlign="center start" style="margin: 5px 0 5px 0;">
-    <div *ngIf="recipe?.cloudinary?.public_id; else showLoader" routerLink="/{{recipe.id}}/edit" style="cursor: pointer;">
-      <cl-image dpr="auto" responsive width="auto" crop="scale" loading="lazy" public-id={{recipe?.cloudinary?.public_id}} height="300" width="300">
+    <div *ngIf="recipe?.cloudinary?.public_id; else showLoader">
+      <cl-image dpr="auto" responsive width="auto" crop="fill" loading="lazy" public-id={{recipe?.cloudinary?.public_id}} height="300" width="300">
         <cl-placeholder></cl-placeholder>
-        <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
       </cl-image>
     </div>
     <ng-template #showLoader>
@@ -14,8 +13,7 @@
       <h2>Recipe</h2>
     </div>
     <div fxFill fxLayout="row wrap" fxLayoutAlign="end center">
-      <button mat-button color="warn" (click)="delete()">Delete</button>
-      <button mat-button color="accent" routerLink="/{{recipe.id}}/edit">Edit</button>
+      <button mat-button color="accent" routerLink="edit">Edit</button>
     </div>
   </mat-card>
 </div>

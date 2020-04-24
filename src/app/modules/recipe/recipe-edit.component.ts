@@ -4,12 +4,14 @@ import { Recipe, RecipeIngredient, RecipeInstruction } from 'src/app/models/Reci
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { switchMap, map, debounceTime } from 'rxjs/operators';
+import { switchMap, map, debounceTime, first, take } from 'rxjs/operators';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { IngredientDialogComponent } from './ingredient-dialog/ingredient-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { InstructionDialogComponent } from './instruction-dialog/instruction-dialog.component';
+import { RecipeDeleteDialogComponent } from './recipe-delete.component';
+import * as firebase from 'firebase/app';
 
 export interface RecipeDeleteDialogData {
   delete: boolean;
@@ -31,6 +33,7 @@ export interface RecipeDeleteDialogData {
   ]
 })
 export class RecipeEditComponent {
+  recipeId: string;
   recipe: Observable<Recipe>;
   refString: string;
   recipeRef: AngularFirestoreDocument<Recipe>;
@@ -53,6 +56,7 @@ export class RecipeEditComponent {
   ) {
     this.recipe = this.route.params.pipe(switchMap((p, i) =>
       this.afAuth.user.pipe(switchMap(auth => {
+        this.recipeId = p.id;
         this.refString = `/users/${auth.uid}/recipes/${p.id}`;
         if (auth) {
           this.recipeRef = this.afFirestore.doc<Recipe>(this.refString);
@@ -106,5 +110,37 @@ export class RecipeEditComponent {
       }
     });
     dialogRef.componentInstance.saving$.subscribe(saving => this.saving$.next(saving));
+  }
+  delete() {
+    const dialogRef = this.dialog.open(RecipeDeleteDialogComponent, {
+      width: '80%',
+      data: { delete: true }
+    });
+
+    dialogRef.afterClosed().pipe(first(), map(async (result: RecipeDeleteDialogData) => {
+      if (result) {
+        try{
+          await this.afFirestore.doc<Recipe>(this.refString).delete();
+          this.router.navigate(['/']);
+        }catch(err){
+          console.log(err);
+        }
+      }
+    })).subscribe();
+  }
+  async removePhoto(){
+    // Move current photo to remove array
+    this.recipe.pipe(take(1), map(r => {
+      const ih = r.imageHistory || [];
+      const imageHistory = [...ih,
+      {
+        cloudinary: r.cloudinary,
+      }];
+      this.recipeRef.set({
+        storageLocation: null,
+        cloudinary: null,
+        imageHistory
+      }, {merge: true});
+    })).subscribe();
   }
 }

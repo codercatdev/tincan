@@ -4,13 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'add',
-    loadChildren: () => import('./modules/camera/camera.module').then(m => m.CameraModule),
-  },
-  {
-    path: '',
+    path: 'recipes',
     loadChildren: () => import('./modules/recipe/recipes.module').then(m => m.RecipeModule),
-  }
+  },
+  { path: '', redirectTo: 'recipes', pathMatch: 'full' }
 ];
 
 @NgModule({

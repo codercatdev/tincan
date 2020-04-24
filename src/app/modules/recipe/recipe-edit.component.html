@@ -1,18 +1,22 @@
 <div *ngIf="recipe | async; let recipe" fxLayout="row" fxLayoutAlign="start start">
   <mat-card fxFlex fxLayout="row wrap" fxLayoutAlign="center start" style="margin: 5px 0 5px 0;">
-    <div fxFlex>
-      <div *ngIf="recipe?.cloudinary?.public_id; else showLoader" routerLink="/{{recipe.id}}/edit" style="cursor: pointer;">
-        <cl-image dpr="auto" responsive width="auto" crop="scale" loading="lazy" public-id={{recipe?.cloudinary?.public_id}} style="width: 100%;">
+    <div fxFlex="50" fxFlex.lt-lg="100">
+      <div *ngIf="recipe?.cloudinary?.public_id; else showLoader">
+        <cl-image dpr="auto" responsive width="auto" crop="fill" loading="lazy" public-id={{recipe?.cloudinary?.public_id}} style="height: 100%; width: 100%;">
           <cl-placeholder></cl-placeholder>
-          <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
         </cl-image>
+        <button mat-raised-button (click)="removePhoto()">Remove</button>
       </div>
       <ng-template #showLoader>
-        <cl-image fetch_format="png" responsive width="auto" crop="scale" public-id="ajonp-ajonp-com/Logos/ajonp/AJonP_Rounded" height="300" width="300">
-        </cl-image>
+        <div *ngIf="recipe?.storageLocation; else showCamera">
+          Processing Image...
+        </div>
+      </ng-template>
+      <ng-template #showCamera>
+        <app-camera [recipeId]="recipeId"></app-camera>
       </ng-template>
     </div>
-    <div fxFlex="50" fxFlex.lt-md="100" style="margin: 5px 0 5px 0;" style="margin: 0 0 0 10px;">
+    <div fxFlex="40" fxFlex.lt-lg="100" style="margin: 5px 0 5px 0;" style="margin: 0 0 0 10px;">
       <div fxLayout="row" fxLayoutAlign="end center">
         <div *ngIf="saving$ | async; else saved">
           <mat-chip-list>
@@ -24,6 +28,7 @@
             <mat-chip color="accent" selected>Saving...</mat-chip>
           </mat-chip-list>
         </ng-template>
+        <button mat-button color="warn" (click)="delete()">Delete</button>
       </div>
       <div fxLayout="column" [formGroup]="recipeForm" *ngIf="recipeForm">
         <mat-form-field appearance="outline">
@@ -58,7 +63,7 @@
       </div>
     </div>
     <div fxFlexFill fxLayout="row wrap" fxLayoutAlign="center">
-      <div fxFlex="45" fxFlex.lt-md="100" style="margin: 20px;">
+      <div fxFlex="30" fxFlex.lt-md="100" style="margin: 20px;">
         <div fxLayout="row wrap" fxLayoutAlign="space-between">
           <h2>Ingredients</h2>
           <button mat-raised-button color="primary" (click)="openIngredientDialog(recipeRef)">Add Ingredient</button>
@@ -85,7 +90,7 @@
           <tr mat-row *matRowDef="let row; columns: recipeIngredientsColumns;"></tr>
         </table>
       </div>
-      <div fxFlex="45" fxFlex.lt-md="100" style="margin: 20px;">
+      <div fxFlex="30" fxFlex.lt-md="100" style="margin: 20px;">
         <div fxLayout="row wrap" fxLayoutAlign="space-between">
           <h2>Instructions</h2>
           <button mat-raised-button color="accent" (click)="openInstructionDialog(recipeRef)">Add Instruction</button>

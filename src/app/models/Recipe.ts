@@ -19,6 +19,32 @@ export class Recipe {
   public recipeYield?: string;
   public totalTime?: number;
   public video?: Video;
+  public imageHistory?: ImageHistory[];
+}
+
+export class ImageHistory{
+  public cloudinary?: Cloudinary;
+  public removed?: firebase.firestore.Timestamp;
+}
+
+export class Cloudinary{
+  access_mode?: string;
+  bytes?: number;
+  created_at?: string;
+  etag?: string;
+  format?: string;
+  height?: string;
+  original_filename?: string;
+  placeholder?: string;
+  public_id?: string;
+  resource_type?: string;
+  secure_url?: string;
+  signature?: string;
+  tags?: [string];
+  type?: string;
+  url?: string;
+  version?: number;
+  width?: number;
 }
 
 export class Nutrition {

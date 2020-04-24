@@ -55,6 +55,12 @@ export const firestoreRecipesOnWrite = functions.firestore.document('users/{user
         console.log('Removing cloudinary', oldDocument.cloudinary.public_id);
         await cloudinary.uploader.destroy(oldDocument.cloudinary.public_id);
       }
+      if(oldDocument.imageHistory){
+        oldDocument.imageHistory.forEach(async image => {
+          console.log('Removing cloudinary history', image.cloudinary.public_id);
+          await cloudinary.uploader.destroy(image.cloudinary.public_id);
+        });
+      }
 
       if (oldDocument.image) {
         // Remove associated storage

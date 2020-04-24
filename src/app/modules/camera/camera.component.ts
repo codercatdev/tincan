@@ -1,10 +1,9 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input, OnChanges } from '@angular/core';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Subject, Observable } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
+import { finalize, first, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as uuid from 'uuid';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { environment } from 'src/environments/environment';
@@ -15,7 +14,8 @@ import { environment } from 'src/environments/environment';
   styles: [
   ]
 })
-export class CameraComponent implements OnInit {
+export class CameraComponent implements OnInit, OnChanges {
+  @Input() recipeId;
     // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
@@ -52,7 +52,11 @@ export class CameraComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
-    this.innerWidth = window.innerWidth;
+    this.innerWidth = window.innerWidth - 10;
+  }
+
+  public ngOnChanges(): void{
+    this.webcamImage = null;
   }
 
   public triggerSnapshot(): void {
@@ -92,8 +96,7 @@ export class CameraComponent implements OnInit {
 
   async upload(){
     const user = await this.afAuth.currentUser;
-    const picId = uuid.v4();
-    const path = `users/${user.uid}/recipes/${picId}`;
+    const path = `users/${user.uid}/recipes/${this.recipeId}`;
     const ref = this.afStorage.ref(path);
     const task = ref.putString(this.webcamImage.imageAsDataUrl, 'data_url', {contentType: 'image/jpeg'});
     // observe percentage changes
@@ -104,7 +107,7 @@ export class CameraComponent implements OnInit {
           this.afFirestore.doc(path).set({
             image,
             storageLocation: `gs://${environment.firebase.storageBucket}/${path}`,
-          });
+          }, {merge: true});
           this.retake();
         }))
      )

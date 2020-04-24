@@ -21,6 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
 import { IconsModule } from '../icons/icons.module';
+import { RecipeCanActivateGuard } from './guards/recipe-can-activate.guard';
+import { CameraModule } from '../camera/camera.module';
+import { RecipeEditCanActivateGuard } from './guards/recipe-edit-can-activate.guard';
 
 const routes: Routes = [
   {
@@ -28,12 +31,20 @@ const routes: Routes = [
     component: RecipesComponent,
   },
   {
+    path: 'add',
+    canActivate: [RecipeCanActivateGuard]
+  },
+  {
     path: ':id',
     component: RecipeComponent,
+    canActivate: [RecipeEditCanActivateGuard]
+
   },
   {
     path: ':id/edit',
     component: RecipeEditComponent,
+    canActivate: [RecipeEditCanActivateGuard]
+
   },
 ];
 
@@ -63,7 +74,8 @@ const routes: Routes = [
     MatIconModule,
     MatChipsModule,
     CloudinaryModule,
-    IconsModule
+    IconsModule,
+    CameraModule
   ]
 })
 export class RecipeModule { }

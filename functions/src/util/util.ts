@@ -6,6 +6,8 @@ const secrets = new SecretManagerServiceClient();
 export const setConfig = async () => {
   if(admin.apps.length){
     console.log('Skipping Config, admin.app exists');
+    console.log('Using Bucket', admin.apps[0].options.storageBucket);
+
   }else{
     const serviceAccountKey = await getSecretValue('serviceAccountKey');
     if (process.env.FIREBASE_CONFIG && serviceAccountKey) {

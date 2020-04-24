@@ -1,30 +1,32 @@
-<div *ngIf='recipes | async; let recipes' fxLayout="row wrap" fxLayoutAlign="center">
+<div *ngIf='recipes | async; let recipes' fxLayout="row wrap" fxLayoutAlign="center start">
   <div *ngIf="recipes.length === 0">
     <h3>No Recipes Loaded Yet</h3>
-    <button mat-raised-button color='accent' [routerLink]="'/add'">Add Recipe</button>
+    <button mat-raised-button color='accent' [routerLink]="'add'">Add Recipe</button>
   </div>
-  <div *ngFor="let recipe of recipes" fxLayout="row wrap" fxLayoutAlign="start start" style="margin: 5px;" fxFlex="100%"
-    fxFlex.gt-xs="80%" fxFlex.gt-sm="50%">
-    <mat-card fxLayout="row wrap" fxLayoutAlign="center start" style="height: 100%; width: 100%;">
-      <div *ngIf="recipe?.cloudinary?.public_id; else showLoader" [routerLink]="recipe.id" style="cursor: pointer;">
-        <cl-image dpr="auto" responsive width="auto" crop="scale" loading="lazy" public-id={{recipe?.cloudinary?.public_id}} height="300" width="300">
-          <cl-placeholder></cl-placeholder>
-          <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
-        </cl-image>
+  <mat-card *ngFor="let recipe of recipes" fxLayout="row wrap" fxLayoutAlign="start start" style="margin: 5px;">
+    <div fxFlex="100">
+      <div [routerLink]="recipe.id" style="cursor: pointer;">
+        <div *ngIf="recipe?.cloudinary?.public_id; else showLoader">
+          <cl-image dpr="auto" responsive width="auto" crop="fill" loading="lazy"
+            public-id={{recipe?.cloudinary?.public_id}} height="300" width="300">
+            <cl-placeholder></cl-placeholder>
+          </cl-image>
+        </div>
       </div>
       <ng-template #showLoader>
-        <cl-image fetch_format="png" responsive width="auto" crop="scale" public-id="ajonp-ajonp-com/Logos/ajonp/AJonP_Rounded" height="300" width="300">
+        <cl-image fetch_format="png" responsive width="auto" crop="scale"
+          public-id="ajonp-ajonp-com/Logos/ajonp/AJonP_Rounded" height="300" width="300">
         </cl-image>
       </ng-template>
       <div fxFlex style="margin: 5px 0 5px 0;">
-        <h2 [routerLink]="recipe.id" style="cursor: pointer;">{{recipe.name || 'Edit Me'}}</h2>
+        <h2 [routerLink]="recipe.id" style="cursor: pointer;">{{recipe.name}}</h2>
         <p>{{recipe.description}}</p>
         <div fxLayout="row wrap" fxLayoutAlign="space-between">
           <p *ngIf="recipe.cookTime">Cook Time: {{recipe.cookTime}} minutes</p>
           <p *ngIf="recipe.prepTime">Prep Time: {{recipe.prepTime}} minutes</p>
         </div>
       </div>
-      <p fxFlexFill style="color:lightgray">Last Updated: {{recipe.updatedAt.toDate() | date:'medium'}}</p>
-    </mat-card>
-  </div>
+    </div>
+    <p fxFlex="100" style="color:lightgray">Last Updated: {{recipe.updatedAt.toDate() | date:'medium'}}</p>
+  </mat-card>
 </div>
