@@ -20,6 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import { IconsModule } from '../icons/icons.module';
 
 const routes: Routes = [
   {
@@ -61,7 +62,8 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatIconModule,
     MatChipsModule,
-    CloudinaryModule
+    CloudinaryModule,
+    IconsModule
   ]
 })
 export class RecipeModule { }

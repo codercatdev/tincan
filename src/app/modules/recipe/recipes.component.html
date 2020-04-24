@@ -6,16 +6,18 @@
   <div *ngFor="let recipe of recipes" fxLayout="row wrap" fxLayoutAlign="start start" style="margin: 5px;" fxFlex="100%"
     fxFlex.gt-xs="80%" fxFlex.gt-sm="50%">
     <mat-card fxLayout="row wrap" fxLayoutAlign="center start" style="height: 100%; width: 100%;">
-      <div *ngIf="recipe?.cloudinary?.public_id; else showCloudinary" >
-        <cl-image [public-id]="recipe?.cloudinary?.public_id" loading="lazy" [routerLink]="recipe.id" height="300" width="300" style="cursor: pointer;" fxLayout="row wrap" fxLayoutAlign="center">
-          <cl-transformation width="300" height="300" gravity="faces" crop="fill"></cl-transformation>
+      <div *ngIf="recipe?.cloudinary?.public_id; else showLoader" [routerLink]="recipe.id" style="cursor: pointer;">
+        <cl-image dpr="auto" responsive width="auto" crop="scale" loading="lazy" public-id={{recipe?.cloudinary?.public_id}} height="300" width="300">
+          <cl-placeholder></cl-placeholder>
+          <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
         </cl-image>
       </div>
-      <ng-template #showCloudinary>
-        <img [src]="recipe?.image" height="300" width="300" />
+      <ng-template #showLoader>
+        <cl-image fetch_format="png" responsive width="auto" crop="scale" public-id="ajonp-ajonp-com/Logos/ajonp/AJonP_Rounded" height="300" width="300">
+        </cl-image>
       </ng-template>
       <div fxFlex style="margin: 5px 0 5px 0;">
-        <h2 [routerLink]="recipe.id" style="cursor: pointer;">{{recipe.name}}</h2>
+        <h2 [routerLink]="recipe.id" style="cursor: pointer;">{{recipe.name || 'Edit Me'}}</h2>
         <p>{{recipe.description}}</p>
         <div fxLayout="row wrap" fxLayoutAlign="space-between">
           <p *ngIf="recipe.cookTime">Cook Time: {{recipe.cookTime}} minutes</p>
